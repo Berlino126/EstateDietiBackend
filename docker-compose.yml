@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: profbarra
+      POSTGRES_DB: DietiEstate25
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  app:
+    build: .
+    ports:
+      - "8800:8800"
+    environment:
+      DATABASE_URL: "postgresql://postgres:profbarra@db:5432/DietiEstate25?schema=public"
+      JWT_SECRET_KEY: "bTL8De4Sd6ky5U/fzAEXtVXd2P+NDwV+lQYZWkUxJsE="
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
