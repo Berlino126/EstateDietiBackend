@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int             @id @default(autoincrement())
+  email           String          @unique
+  username        String          @unique
+  passwordHash    String
+  role            String
+  avatar          String?
+  createdAt       DateTime        @default(now())
+  agencyUsers     AgencyUser[]
+  oauthAccounts   OauthAccount[]
+  properties      Property[]      @relation("AgentProperties")
+  savedProperties SavedProperty[]
+}
+
+model OauthAccount {
+  id         Int    @id @default(autoincrement())
+  userId     Int
+  provider   String
+  providerId String
+  user       User   @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerId])
+}
+
+model RealEstateAgency {
+  id          Int          @id @default(autoincrement())
+  name        String
+  address     String
+  city        String
+  phone       String?
+  email       String       @unique
+  website     String?
+  avatar      String?
+  createdAt   DateTime     @default(now())
+  agencyUsers AgencyUser[]
+  properties  Property[]
+}
+
+model AgencyUser {
+  id         Int              @id @default(autoincrement())
+  agencyId   Int
+  userId     Int
+  role       String
+  assignedAt DateTime         @default(now())
+  agency     RealEstateAgency @relation(fields: [agencyId], references: [id])
+  user       User             @relation(fields: [userId], references: [id])
+
+  @@unique([agencyId, userId])
+}
+
+model Property {
+  id              Int               @id @default(autoincrement())
+  agentId         Int?              @map("agent_id")
+  agencyId        Int?              @map("agency_id")
+  title           String
+  price           Decimal           @db.Decimal(12, 2)
+  images          String[]
+  address         String
+  city            String
+  rooms           Int
+  bathroom        Int
+  latitude        Float
+  longitude       Float
+  type            Type
+  contract        Contract
+  createdAt       DateTime          @default(now())
+  agency          RealEstateAgency? @relation(fields: [agencyId], references: [id])
+  agent           User?             @relation("AgentProperties", fields: [agentId], references: [id])
+  propertyDetails PropertyDetail?
+  savedProperties SavedProperty[]
+}
+
+model PropertyDetail {
+  id              Int      @id @default(autoincrement())
+  description     String?
+  size            Int
+  floor           String
+  elevator        Boolean?
+  terrace         Boolean?
+  balcony         Boolean?
+  furnished       Boolean?
+  cellar          Boolean?
+  pool            Boolean?
+  garden          Boolean?
+  garage          Boolean?
+  heatingType     String?
+  airConditioning Boolean?
+  energyClass     String?
+  propertyId      Int      @unique
+  property        Property @relation(fields: [propertyId], references: [id])
+}
+
+model SavedProperty {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  propertyId Int
+  savedAt    DateTime @default(now())
+  property   Property @relation(fields: [propertyId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, propertyId])
+}
+
+enum Type {
+  apartment
+  house
+  condo
+  land
+}
+
+enum Contract {
+  buy
+  rent
+}

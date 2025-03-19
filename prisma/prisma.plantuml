@@ -1,0 +1,113 @@
+@startuml
+
+entity User {
+  * id : Int
+  * email : String
+  * username : String
+  * passwordHash : String
+  * role : String
+  - avatar : String?
+  * createdAt : DateTime
+}
+
+entity OauthAccount {
+  * id : Int
+  * userId : Int
+  * provider : String
+  * providerId : String
+}
+
+entity RealEstateAgency {
+  * id : Int
+  * name : String
+  * address : String
+  * city : String
+  - phone : String?
+  * email : String
+  - website : String?
+  - avatar : String?
+  * createdAt : DateTime
+}
+
+entity AgencyUser {
+  * id : Int
+  * agencyId : Int
+  * userId : Int
+  * role : String
+  * assignedAt : DateTime
+}
+
+entity Property {
+  * id : Int
+  - agentId : Int?
+  - agencyId : Int?
+  * title : String
+  * price : Decimal(12,2)
+  * images : String[]
+  * address : String
+  * city : String
+  * rooms : Int
+  * bathroom : Int
+  * latitude : Float
+  * longitude : Float
+  * createdAt : DateTime
+}
+
+entity PropertyDetail {
+  * id : Int
+  - description : String?
+  * size : Int
+  * floor : String
+  - elevator : Boolean?
+  - terrace : Boolean?
+  - balcony : Boolean?
+  - furnished : Boolean?
+  - cellar : Boolean?
+  - pool : Boolean?
+  - garden : Boolean?
+  - garage : Boolean?
+  - heatingType : String?
+  - airConditioning : Boolean?
+  - energyClass : String?
+  * propertyId : Int
+}
+
+entity SavedProperty {
+  * id : Int
+  * userId : Int
+  * propertyId : Int
+  * savedAt : DateTime
+}
+
+enum Type {
+  apartment
+  house
+  condo
+  land
+}
+
+enum Contract {
+  buy
+  rent
+}
+
+User "1" -- "*" OauthAccount : has
+User "1" -- "*" AgencyUser : has
+User "1" -- "*" Property : owns
+User "1" -- "*" SavedProperty : saves
+
+RealEstateAgency "1" -- "*" AgencyUser : employs
+RealEstateAgency "1" -- "*" Property : owns
+
+AgencyUser "1" -- "1" RealEstateAgency : belongs to
+AgencyUser "1" -- "1" User : belongs to
+
+Property "1" -- "1" PropertyDetail : has
+Property "1" -- "*" SavedProperty : is saved by
+Property "1" -- "0..1" User : agent
+Property "1" -- "0..1" RealEstateAgency : listed by
+
+SavedProperty "1" -- "1" Property : references
+SavedProperty "1" -- "1" User : references
+
+@enduml
