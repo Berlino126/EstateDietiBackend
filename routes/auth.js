@@ -48,13 +48,7 @@ router.get(
   
       // Crea un URL con i dati dell'utente come query param
       const redirectUrl = `http://localhost:5173/login?token=${token}&id=${user.id}&username=${user.username}&email=${user.email}&role=${user.role}`;
-      res.cookie("token_access", token, {
-        secure: false, // Imposta su true solo se usi HTTPS
-        sameSite: "none", // Necessario per cross-origin
-        maxAge: age, // Durata del cookie
-        domain: '35.181.57.245', // Dominio del backend
-        path: '/', // Percorso del cookie
-      });
+      
       res.redirect(redirectUrl);
     }
   );
