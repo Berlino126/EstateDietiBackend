@@ -77,7 +77,7 @@ export const login = async (req, res) => {
       secure: false, // Imposta su true solo se usi HTTPS
       sameSite: "none", // Necessario per cross-origin
       maxAge: age, // Durata del cookie
-      domain: '35.181.57.245', // Dominio del backend
+      domain: '35.181.57.245:8800', // Dominio del backend
       path: '/', // Percorso del cookie
     })
     .status(200)
@@ -92,7 +92,7 @@ export const logout = (req, res) => {
   //console.log("Seconda prova");
   res.clearCookie("token_access", {
     httpOnly: true,
-    domain: '35.181.57.245',
+    domain: '35.181.57.245:8800',
     path: '/',
   }).status(200).json("Logout eseguito")
 };
