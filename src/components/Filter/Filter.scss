@@ -1,0 +1,184 @@
+@import "../../style/responsive.scss";
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    .title {
+        display: flex;
+        justify-content: space-between; /* Spaziatura tra il titolo e il bottone */
+        align-items: center; /* Allineamento verticale al centro */
+        gap: 20%;
+
+        button {
+            margin-top: 10%;
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10%;
+        flex-wrap: wrap;
+        width: 100%;
+
+        .item:nth-child(1) {
+            flex: 3;
+
+            input {
+                width: 97%;
+            }
+        }
+    }
+
+    .filerButtons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: 10px;
+
+        .advance {
+            display: flex;
+            justify-content: space-between;
+            gap: 10%;
+
+            @include sm {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    .city-container {
+        position: relative;
+        width: 100%;
+
+        .cityinput {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+
+            &:focus {
+                border-color: #333;
+            }
+        }
+
+        .autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-top: none;
+            z-index: 10;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            max-height: 150px;
+            overflow-y: auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+            li {
+                padding: 10px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #f0f0f0;
+                }
+            }
+        }
+    }
+
+    h1 {
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        font-size: 42px;
+        margin-bottom: 10px;
+        margin-top: 7%;
+    }
+
+    h1 b {
+        font-weight: 800;
+    }
+
+    .item {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        input,
+        select {
+            width: 120px;
+            padding: 10px;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+            transition: 0.3s ease-in-out;
+
+            &:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+            }
+        }
+    }
+
+    .bottom {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+
+        @include sm {
+            flex-wrap: wrap;
+        }
+    }
+
+    button {
+        border-radius: 8px;
+        width: 110px;
+        padding: 12px;
+        border: none;
+        cursor: pointer;
+        background: #000; /* Bottone nero */
+        color: white; /* Testo bianco */
+        font-weight: 600;
+        transition: background 0.3s, transform 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        img {
+            width: 30%;
+        }
+
+        &:hover {
+            background: #222; /* Nero leggermente più chiaro per effetto hover */
+            border-color: #6ccff6;
+            box-shadow: 0px 4px 10px rgba(108, 207, 246, 0.5);
+            transform: scale(1.05); /* Leggero ingrandimento al passaggio del mouse */
+        }
+    }
+}

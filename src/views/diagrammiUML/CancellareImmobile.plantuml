@@ -1,0 +1,100 @@
+@startuml
+package Boundary{
+    class SinglePage{
+  - property: object
+  - currentUser: object
+  - error: string
+  - saved: boolean
+  - navigate: function
+  + handleDelete(): void
+  + handleSave(): void
+  + render(): JSX.Element
+}
+
+class PropertyFeatures {
+    - details: object
+  + render(details: object): JSX.Element
+  + getFeatures(details: object): array
+}
+
+class MapComponent {
+        - selectedMarker: object | null
+  - center: object | null
+  - isLoaded: boolean
+  - loadError: boolean
+  + render(items: object[]): JSX.Element
+  + useEffect(setCenter, [items])
+}
+
+class Slider {
+    - imgIndex: number
+  + changeSlide(direction: string): void
+  + render(images: array): JSX.Element
+}
+
+SinglePage --> PropertyFeatures
+SinglePage --> MapComponent 
+SinglePage --> Slider 
+
+}
+     package PropertyController {
+  class PropertyController {
+    + getProperties(req, res)
+    + getProperty(req, res)
+    + addProperty(req, res)
+    + updateProperty(req, res)
+    + deleteProperty(req, res)
+  }
+}
+package Entity{
+  entity RealEstateAgency {
+  * id : Int
+  * name : String
+  * address : String
+  * city : String
+  - phone : String?
+  * email : String
+  - website : String?
+  - avatar : String?
+  * createdAt : DateTime
+}
+entity Property {
+  * id : Int
+  - agentId : Int?
+  - agencyId : Int?
+  * title : String
+  * price : Decimal(12,2)
+  * images : String[]
+  * address : String
+  * city : String
+  * rooms : Int
+  * bathroom : Int
+  * latitude : Float
+  * longitude : Float
+  * createdAt : DateTime
+}
+
+entity PropertyDetail {
+  * id : Int
+  - description : String?
+  * size : Int
+  * floor : String
+  - elevator : Boolean?
+  - terrace : Boolean?
+  - balcony : Boolean?
+  - furnished : Boolean?
+  - cellar : Boolean?
+  - pool : Boolean?
+  - garden : Boolean?
+  - garage : Boolean?
+  - heatingType : String?
+  - airConditioning : Boolean?
+  - energyClass : String?
+  * propertyId : Int
+
+}
+
+}
+SinglePage --> PropertyController
+PropertyController -->Entity
+@enduml

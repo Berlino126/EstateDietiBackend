@@ -1,0 +1,145 @@
+@startuml
+package Boundary{
+
+
+class HomePage {
+  + render(): JSX.Element
+}
+
+class SearchBar{
+    + contract: string[]
+  + priceOptionsBuy: number[]
+  + priceOptionsRent: number[]
+  - query: object
+  - suggestions: string[]
+  - navigate: function
+  + switchType(val: string): void
+  + getCityCoordinates(location: string): object
+  + handleSearch(event: Event): void
+  + handleChange(event: Event): void
+  + handleSelectSuggestion(city: string): void
+  + handlePriceChange(event: Event): void
+
+}
+
+HomePage --> SearchBar : "Contiene"
+SearchBar --> ListPage : "Porta a"
+
+class ListPage {
+  - isMapOpen: boolean
+  - isSmallScreen: boolean
+  - searchParams: object
+  - query: string
+  + fetchProperties({pageParam, queryKey}): Promise
+  + useEffect(handleResize, [])
+  + useEffect(refetch, [query])
+}
+
+class MapComponent {
+    - selectedMarker: object | null
+  - center: object | null
+  - isLoaded: boolean
+  - loadError: boolean
+  + render(items: object[]): JSX.Element
+  + useEffect(setCenter, [items])
+}
+
+class Filter {
+    - priceOptionsBuy: int[]
+  - priceOptionsRent: int[]
+  - raggioOptions: int[]
+  - query: object
+  - advancedFilters: object
+  - isDeepSearchOpen: boolean
+  - suggestions: string[]
+  + openDeepSearch(): void
+  + closeDeepSearch(): void
+  + handleChange(e: object): void
+  + handleSelectSuggestion(city: string): void
+  + getCityCoordinates(cityName: string): object
+  + handleFilter(): void
+  + applyFilters(filters: object): void
+  + handlePriceChange(e: object): void
+  + resetFilters(): void
+
+}
+
+class Build {
+
+  + render(item: object): JSX.Element
+}
+class DeepSearch {
+  - filters: object
+  + handleChange(e: object): void
+  + applyFilters(): void
+  + useEffect(savedFilters, isOpen): void
+}
+
+
+ListPage --> MapComponent : "Contiene"
+ListPage --> Filter : "Contiene"
+ListPage --> Build : "Itera su lista"
+Filter --> DeepSearch : "Apre e gestisce"
+}
+
+  package PropertyController {
+  class PropertyController {
+    + getProperties(req, res)
+    + getProperty(req, res)
+    + addProperty(req, res)
+    + updateProperty(req, res)
+    + deleteProperty(req, res)
+  }
+}
+package Entity{
+  entity RealEstateAgency {
+  * id : Int
+  * name : String
+  * address : String
+  * city : String
+  - phone : String?
+  * email : String
+  - website : String?
+  - avatar : String?
+  * createdAt : DateTime
+}
+entity Property {
+  * id : Int
+  - agentId : Int?
+  - agencyId : Int?
+  * title : String
+  * price : Decimal(12,2)
+  * images : String[]
+  * address : String
+  * city : String
+  * rooms : Int
+  * bathroom : Int
+  * latitude : Float
+  * longitude : Float
+  * createdAt : DateTime
+}
+
+entity PropertyDetail {
+  * id : Int
+  - description : String?
+  * size : Int
+  * floor : String
+  - elevator : Boolean?
+  - terrace : Boolean?
+  - balcony : Boolean?
+  - furnished : Boolean?
+  - cellar : Boolean?
+  - pool : Boolean?
+  - garden : Boolean?
+  - garage : Boolean?
+  - heatingType : String?
+  - airConditioning : Boolean?
+  - energyClass : String?
+  * propertyId : Int
+}
+}
+Boundary.DeepSearch --> PropertyController
+PropertyController --> Entity
+
+
+@enduml

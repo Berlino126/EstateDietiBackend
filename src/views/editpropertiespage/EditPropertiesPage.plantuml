@@ -1,0 +1,13 @@
+@startuml
+class EditProperties {
+  - property: object
+  - images: array
+  - error: string
+  - value: string
+  - checkedDetails: object
+  + handleCheckboxChange(event: object): void
+  + handleSubmit(event: object): void
+  + render(): JSX.Element
+}
+
+@enduml

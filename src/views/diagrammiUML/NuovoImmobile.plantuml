@@ -1,0 +1,148 @@
+@startuml
+package Boundary {
+  class EditProperties {
+    - property: object
+    - images: array
+    - error: string
+    - value: string
+    - checkedDetails: object
+    + handleCheckboxChange(event: object): void
+    + handleSubmit(event: object): void
+    + render(): JSX.Element
+  }
+
+  class ProfilePage {
+    - agencyInfo: object
+    - avatar: string
+    - isAdminOpen: boolean
+    - isAgentOpen: boolean
+    - isEditAgencyOpen: boolean
+    - isChangePasswordOpen: boolean
+    + handleLogout(): void
+    + openPasswordChange(): void
+    + closePasswordChange(): void
+    + openAdminDialog(): void
+    + closeAdminDialog(): void
+    + openAgentDialog(): void
+    + closeAgentDialog(): void
+    + openEditAgencyDialog(): void
+    + closeEditAgencyDialog(): void
+    + updateAvatar(avatar: string): void
+    + fetchSavedProperties(pageParam: number): object
+    + fetchUploadedProperties(pageParam: number): object
+    + render(): JSX.Element
+  }
+
+  class AdminDashboard {
+    - admins: array
+    - newAdmin: object
+    - currentUser: object
+    + fetchAdmins(): void
+    + handleDelete(id: string): void
+    + handleChange(event: object): void
+    + handleSubmit(event: object): void
+    + render(): JSX.Element
+  }
+
+  class AgentDashboard {
+    - agents: array
+    - newAgent: object
+    - currentUser: object
+    + fetchAgents(): void
+    + handleDelete(id: string): void
+    + handleChange(event: object): void
+    + handleSubmit(event: object): void
+    + render(): JSX.Element
+  }
+
+  class EditAgencyDashboard {
+    - agencies: array
+    - newAgency: object
+    - currentUser: object
+    + fetchAgencies(): void
+    + handleDelete(id: string): void
+    + handleChange(event: object): void
+    + handleSubmit(event: object): void
+    + render(): JSX.Element
+  }
+
+  class ChangePassword {
+    - oldPassword: string
+    - newPassword: string
+    - confirmPassword: string
+    - error: string
+    - successMessage: string
+    + handleSubmit(event: object): void
+    + handleClose(): void
+    + render(): JSX.Element
+  }
+
+  ProfilePage --> AdminDashboard
+  ProfilePage --> EditAgencyDashboard
+  ProfilePage --> AgentDashboard
+  ProfilePage --> ChangePassword
+  ProfilePage --> EditProperties : "Può aggiungere immobili"
+}
+
+package PropertyController {
+  class PropertyController {
+    + getProperties(req, res)
+    + getProperty(req, res)
+    + addProperty(req, res)
+    + updateProperty(req, res)
+    + deleteProperty(req, res)
+  }
+
+  EditProperties --> PropertyController
+}
+PropertyController --> Entity
+package Entity {
+  entity RealEstateAgency {
+    * id : Int
+    * name : String
+    * address : String
+    * city : String
+    - phone : String?
+    * email : String
+    - website : String?
+    - avatar : String?
+    * createdAt : DateTime
+  }
+
+  entity Property {
+    * id : Int
+    - agentId : Int?
+    - agencyId : Int?
+    * title : String
+    * price : Decimal(12,2)
+    * images : String[]
+    * address : String
+    * city : String
+    * rooms : Int
+    * bathroom : Int
+    * latitude : Float
+    * longitude : Float
+    * createdAt : DateTime
+  }
+
+  entity PropertyDetail {
+    * id : Int
+    - description : String?
+    * size : Int
+    * floor : String
+    - elevator : Boolean?
+    - terrace : Boolean?
+    - balcony : Boolean?
+    - furnished : Boolean?
+    - cellar : Boolean?
+    - pool : Boolean?
+    - garden : Boolean?
+    - garage : Boolean?
+    - heatingType : String?
+    - airConditioning : Boolean?
+    - energyClass : String?
+    * propertyId : Int
+  }
+
+}
+@enduml

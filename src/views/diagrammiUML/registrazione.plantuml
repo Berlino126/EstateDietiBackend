@@ -1,0 +1,70 @@
+@startuml
+
+package Boundary {
+  class RegisterPage {
+    + handleSubmit(e)
+    + google()
+    + github()
+  }
+  
+  class LoginPage {
+    + handleSubmit(e)
+    + google()
+    + github()
+  }
+  
+  class HomePage {
+    + render(): JSX.Element
+  }
+  
+  class SearchBar {
+    + contract: string[]
+    + priceOptionsBuy: number[]
+    + priceOptionsRent: number[]
+    - query: object
+    - suggestions: string[]
+    - navigate: function
+    + switchType(val: string): void
+    + getCityCoordinates(location: string): object
+    + handleSearch(event: Event): void
+    + handleChange(event: Event): void
+    + handleSelectSuggestion(city: string): void
+    + handlePriceChange(event: Event): void
+  }
+  
+  HomePage --> SearchBar : "Contiene"
+}
+
+package Entity {
+  entity User {
+    * id : Int
+    * email : String
+    * username : String
+    * passwordHash : String
+    * role : String
+    - avatar : String?
+    * createdAt : DateTime
+  }
+  
+  entity OauthAccount {
+    * id : Int
+    * userId : Int
+    * provider : String
+    * providerId : String
+  }
+}
+
+package AuthController {
+  class AuthController {
+    + register(req, res)
+    + login(req, res)
+    + logout(req, res)
+  }
+}
+
+Boundary.RegisterPage --> AuthController 
+Boundary.LoginPage --> AuthController 
+AuthController.AuthController --> Entity.User 
+AuthController.AuthController --> Entity.OauthAccount
+
+@enduml

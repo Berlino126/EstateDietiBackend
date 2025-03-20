@@ -1,0 +1,69 @@
+@startuml
+class ProfilePage {
+  - agencyInfo: object
+  - avatar: string
+  - isAdminOpen: boolean
+  - isAgentOpen: boolean
+  - isEditAgencyOpen: boolean
+  - isChangePasswordOpen: boolean
+  + handleLogout(): void
+  + openPasswordChange(): void
+  + closePasswordChange(): void
+  + openAdminDialog(): void
+  + closeAdminDialog(): void
+  + openAgentDialog(): void
+  + closeAgentDialog(): void
+  + openEditAgencyDialog(): void
+  + closeEditAgencyDialog(): void
+  + updateAvatar(avatar: string): void
+  + fetchSavedProperties(pageParam: number): object
+  + fetchUploadedProperties(pageParam: number): object
+  + render(): JSX.Element
+}
+
+class AdminDashboard {
+  - admins: array
+  - newAdmin: object
+  - currentUser: object
+  + fetchAdmins(): void
+  + handleDelete(id: string): void
+  + handleChange(event: object): void
+  + handleSubmit(event: object): void
+  + render(): JSX.Element
+}
+class AgentDashboard {
+  - agents: array
+  - newAgent: object
+  - currentUser: object
+  + fetchAgents(): void
+  + handleDelete(id: string): void
+  + handleChange(event: object): void
+  + handleSubmit(event: object): void
+  + render(): JSX.Element
+}
+class EditAgencyDashboard {
+  - agencies: array
+  - newAgency: object
+  - currentUser: object
+  + fetchAgencies(): void
+  + handleDelete(id: string): void
+  + handleChange(event: object): void
+  + handleSubmit(event: object): void
+  + render(): JSX.Element
+}
+class ChangePassword {
+  - oldPassword: string
+  - newPassword: string
+  - confirmPassword: string
+  - error: string
+  - successMessage: string
+  + handleSubmit(event: object): void
+  + handleClose(): void
+  + render(): JSX.Element
+}
+ProfilePage --> AdminDashboard
+ProfilePage --> EditAgencyDashboard
+ProfilePage --> AgentDashboard
+ProfilePage --> ChangePassword
+
+@enduml

@@ -1,0 +1,92 @@
+/* DeepSearch.scss */
+.deep-search-overlay {
+    
+    position: absolute;
+    z-index: 30000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .deep-search-dialog {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .input-group{
+    display: flex;
+    justify-content: space-between;
+    padding: 1%;
+
+}
+.input-group label {
+    font-size: 14px;
+
+
+  }
+  .input-group input, .input-group select {
+    padding: 1%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+
+    width: 150px;
+  }
+  
+.caratteristiche {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 5%;
+  }
+  
+  .checkbox-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .checkbox-group label {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+    .text{
+      display: flex;
+      align-items: center;
+    }
+    input{
+      width: 20px;
+    }
+  }
+
+  .checkbox-group i {
+    margin-right: 10%; /* Adjusts the space between the icon and the label */
+  }
+  
+  .buttons{
+    display: flex;
+    justify-content: space-between;
+    button {
+        margin-top: 10px;
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+  }
+
+  

@@ -1,0 +1,178 @@
+@startuml
+package "VIEW" {
+    class SinglePage  {
+  - property: object
+  - currentUser: object
+  - error: string
+  - saved: boolean
+  - navigate: function
+  + handleDelete(): void
+  + handleSave(): void
+  + render(): JSX.Element
+}
+class ProfilePage {
+  - agencyInfo: object
+  - avatar: string
+  - isAdminOpen: boolean
+  - isAgentOpen: boolean
+  - isEditAgencyOpen: boolean
+  - isChangePasswordOpen: boolean
+  + handleLogout(): void
+  + openPasswordChange(): void
+  + closePasswordChange(): void
+  + openAdminDialog(): void
+  + closeAdminDialog(): void
+  + openAgentDialog(): void
+  + closeAgentDialog(): void
+  + openEditAgencyDialog(): void
+  + closeEditAgencyDialog(): void
+  + updateAvatar(avatar: string): void
+  + fetchSavedProperties(pageParam: number): object
+  + fetchUploadedProperties(pageParam: number): object
+  + render(): JSX.Element
+}
+
+class AdminDashboard {
+  - admins: array
+  - newAdmin: object
+  - currentUser: object
+  + fetchAdmins(): void
+  + handleDelete(id: string): void
+  + handleChange(event: object): void
+  + handleSubmit(event: object): void
+  + render(): JSX.Element
+}
+class AgentDashboard {
+  - agents: array
+  - newAgent: object
+  - currentUser: object
+  + fetchAgents(): void
+  + handleDelete(id: string): void
+  + handleChange(event: object): void
+  + handleSubmit(event: object): void
+  + render(): JSX.Element
+}
+class EditAgencyDashboard {
+  - agencies: array
+  - newAgency: object
+  - currentUser: object
+  + fetchAgencies(): void
+  + handleDelete(id: string): void
+  + handleChange(event: object): void
+  + handleSubmit(event: object): void
+  + render(): JSX.Element
+}
+class ChangePassword {
+  - oldPassword: string
+  - newPassword: string
+  - confirmPassword: string
+  - error: string
+  - successMessage: string
+  + handleSubmit(event: object): void
+  + handleClose(): void
+  + render(): JSX.Element
+}
+ProfilePage --> AdminDashboard: "Show"
+ProfilePage --> EditAgencyDashboard: "Show"
+ProfilePage --> AgentDashboard: "Show"
+ProfilePage --> ChangePassword: "Show"
+
+class ListPage {
+  - isMapOpen: boolean
+  - isSmallScreen: boolean
+  - searchParams: object
+  - query: string
+  + fetchProperties({pageParam, queryKey}): Promise
+  + useEffect(handleResize, [])
+  + useEffect(refetch, [query])
+}
+
+class MapComponent {
+    - selectedMarker: object | null
+  - center: object | null
+  - isLoaded: boolean
+  - loadError: boolean
+  + render(items: object[]): JSX.Element
+  + useEffect(setCenter, [items])
+}
+
+class Filter {
+    - priceOptionsBuy: int[]
+  - priceOptionsRent: int[]
+  - raggioOptions: int[]
+  - query: object
+  - advancedFilters: object
+  - isDeepSearchOpen: boolean
+  - suggestions: string[]
+  + openDeepSearch(): void
+  + closeDeepSearch(): void
+  + handleChange(e: object): void
+  + handleSelectSuggestion(city: string): void
+  + getCityCoordinates(cityName: string): object
+  + handleFilter(): void
+  + applyFilters(filters: object): void
+  + handlePriceChange(e: object): void
+  + resetFilters(): void
+
+}
+
+class Build {
+
+  + render(item: object): JSX.Element
+}
+class DeepSearch {
+  - filters: object
+  + handleChange(e: object): void
+  + applyFilters(): void
+  + useEffect(savedFilters, isOpen): void
+}
+class HomePage {
+  + render(): JSX.Element
+}
+
+class SearchBar{
+    + contract: string[]
+  + priceOptionsBuy: number[]
+  + priceOptionsRent: number[]
+  - query: object
+  - suggestions: string[]
+  - navigate: function
+  + switchType(val: string): void
+  + getCityCoordinates(location: string): object
+  + handleSearch(event: Event): void
+  + handleChange(event: Event): void
+  + handleSelectSuggestion(city: string): void
+  + handlePriceChange(event: Event): void
+
+}
+class EditProperties {
+  - property: object
+  - images: array
+  - error: string
+  - value: string
+  - checkedDetails: object
+  + handleCheckboxChange(event: object): void
+  + handleSubmit(event: object): void
+  + render(): JSX.Element
+}
+  class LoginPage {
+    - error: String
+    - isLoading: Boolean
+    - handleSubmit(e: Event): void
+    - google(): void
+    - github(): void
+  }
+    class RegisterPage {
+    - error: String
+    - isLoading: Boolean
+    - handleSubmit(e: Event): void
+    - google(): void
+    - github(): void
+  }
+ListPage --> MapComponent : "Contiene"
+ListPage --> Filter : "Contiene"
+ListPage --> Build : "Itera su lista"
+Filter --> DeepSearch : "Apre e gestisce"
+HomePage --> SearchBar : "Contiene"
+}
+@enduml

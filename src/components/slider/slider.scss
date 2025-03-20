@@ -1,0 +1,140 @@
+@import "../../style/responsive.scss";
+.slider {
+    margin-bottom: 5%;
+    width: 100%;
+    height: 250px;
+    display: flex;
+    gap: 15px;
+    position: relative;
+    .slideropen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.85); // Ridotto opacità per meno aggressività
+        backdrop-filter: blur(10px); // Sfocatura dello sfondo
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 9999;
+        opacity: 0;
+        transform: scale(0.95);
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+        &.open {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .arrow {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            
+            &:hover {
+                transform: scale(1.2);
+            }
+            img {
+                width: 25px;
+                height: 45px;
+
+                @include md{
+                    width: 30px;
+                }
+                @include sm{
+                    width: 20px;
+                }
+            }
+            .left {
+                transform: rotate(180deg);
+            }
+        }
+
+        .imgContainer {
+            flex: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            
+            img {
+                width: 1000px;
+                max-width: 90%;
+                
+                max-height: 90vh;
+                object-fit: contain;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+                transition: transform 0.3s ease;
+                &:hover {
+                    transform: scale(1.02);
+                }
+            }
+        }
+
+        .close {
+            overflow-x: hidden;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10000;
+            transition: color 0.3s ease;
+            &:hover {
+                color: #ff6347;
+            }
+        }
+    }
+
+    .big {
+        flex: 3;
+        cursor: pointer;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    .small {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        @include md {
+            display: none; // Nasconde .small su schermi medi
+        }
+
+        @include sm {
+            display: none; // Nasconde .small su schermi piccoli
+        }
+        img {
+            height: 70px;
+            width: auto;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            object-fit: cover;
+            &:hover {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+            &.active {
+                border: 3px solid #ff6347;
+            }
+        }
+    }
+}
